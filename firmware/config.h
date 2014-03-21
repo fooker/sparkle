@@ -35,21 +35,21 @@
  * The pin number to transmit the red channel.
  */
 #ifndef SPARKLE_PIN_R
-#define SPARKLE_PIN_R PC1
+#define SPARKLE_PIN_R PC0
 #endif
 
 /**
  * The pin number to transmit the green channel.
  */
 #ifndef SPARKLE_PIN_G
-#define SPARKLE_PIN_G PC2
+#define SPARKLE_PIN_G PC1
 #endif
 
 /**
  * The pin number to transmit the blue channel.
  */
 #ifndef SPARKLE_PIN_B
-#define SPARKLE_PIN_B PC3
+#define SPARKLE_PIN_B PC2
 #endif
 
 /**
@@ -58,7 +58,7 @@
  * All color channels are using a common clock line.
  */
 #ifndef SPARKLE_PIN_CLK
-#define SPARKLE_PIN_CLK PC4
+#define SPARKLE_PIN_CLK PC3
 #endif
 
 /**
@@ -67,7 +67,7 @@
  * All color channels are using a common latch line.
  */
 #ifndef SPARKLE_PIN_LATCH
-#define SPARKLE_PIN_LATCH PC5
+#define SPARKLE_PIN_LATCH PC4
 #endif
 
 /**

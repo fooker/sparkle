@@ -25,5 +25,10 @@ int main() {
 
       _delay_ms(5);
     }
+
+    sparkle_dots[i].r = 0;
+    sparkle_dots[i].g = 0;
+    sparkle_dots[i].b = 0;
+    _delay_ms(500);
   }
 }

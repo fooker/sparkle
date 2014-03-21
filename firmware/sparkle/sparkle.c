@@ -60,18 +60,12 @@ ISR(TIMER0_OVF_vect) {
 
   // Walk over all dots
   for (uint8_t i = 0; i < SPARKLE_DOT_CNT; i++) {
-//    register uint8_t p = SPARKLE_PORT
-//                       & ~( (1 << SPARKLE_PIN_R)
-//                          | (1 << SPARKLE_PIN_G)
-//                          | (1 << SPARKLE_PIN_B));
-
     // Build output with all color bits off assuming clock line and latch line
     // are down before
     register uint8_t p = 0;
-
-    if (x <= pwmtable[sparkle_dots[i].r]) p |= (1 << SPARKLE_PIN_R);
-    if (x <= pwmtable[sparkle_dots[i].g]) p |= (1 << SPARKLE_PIN_G);
-    if (x <= pwmtable[sparkle_dots[i].b]) p |= (1 << SPARKLE_PIN_B);
+    if (x >= pwmtable[sparkle_dots[i].r]) p |= (1 << SPARKLE_PIN_R);
+    if (x >= pwmtable[sparkle_dots[i].g]) p |= (1 << SPARKLE_PIN_G);
+    if (x >= pwmtable[sparkle_dots[i].b]) p |= (1 << SPARKLE_PIN_B);
 
     // Load color bits to shift registers
     SPARKLE_PORT = p;
