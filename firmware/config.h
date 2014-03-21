@@ -6,7 +6,7 @@
  * The number of dots available.
  */
 #ifndef SPARKLE_DOT_CNT
-#define SPARKLE_DOT_CNT 1
+#define SPARKLE_DOT_CNT 24
 #endif
 
 /**
@@ -68,46 +68,6 @@
  */
 #ifndef SPARKLE_PIN_LATCH
 #define SPARKLE_PIN_LATCH PC4
-#endif
-
-/**
- * The number of us to wait for the values to settle.
- *
- * The delay is applied after setting the values for the channels and before
- * setting the clock line to HIGH.
- */
-#ifndef SPARKLE_CLK_DELAY_PRE
-#define SPARKLE_CLK_DELAY_PRE 10
-#endif
-
-/**
- * The number of us to keep the clock line HIGH.
- *
- * The delay is applies after setting the clock line to HIGH and before setting
- * the click line to LOW.
- */
-#ifndef SPARKLE_CLK_DELAY_HIGH
-#define SPARKLE_CLK_DELAY_HIGH 20
-#endif
-
-/**
- * The number of us to wait for the shift registers to process the values.
- *
- * The delay is applied after setting the clock line to LOW and before setting
- * new values for the channels.
- */
-#ifndef SPARKLE_CLK_DELAY_POST
-#define SPARKLE_CLK_DELAY_POST 10
-#endif
-
-/**
- * The number of us to keep the latch line HIGH.
- *
- * The delay is applies after setting the latch line to HIGH and before setting
- * the latch line to LOW.
- */
-#ifndef SPARKLE_LATCH_DELAY_HIGH
-#define SPARKLE_LATCH_DELAY_HIGH 20
 #endif
 
 #endif /* SPARKLE_CONFIG_H_ */

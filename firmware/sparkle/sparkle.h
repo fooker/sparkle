@@ -6,23 +6,28 @@
 
 #include "../config.h"
 
-
-typedef volatile struct {
-  volatile uint8_t r;
-  volatile uint8_t g;
-  volatile uint8_t b;
-} sparkle_color;
-
-
 /**
  * Initialize the controller.
  */
 void sparkle_init();
 
+void sparkle_update();
 
-/**
- * The colors of the dots.
- */
-extern volatile sparkle_color* const sparkle_dots;
+void sparkle_set(const uint8_t index,
+                 const uint8_t r,
+                 const uint8_t g,
+                 const uint8_t b);
+
+void sparkle_set_r(const uint8_t index,
+                   const uint8_t r);
+
+void sparkle_set_g(const uint8_t index,
+                   const uint8_t g);
+
+void sparkle_set_b(const uint8_t index,
+                   const uint8_t b);
+
+void sparkle_set_w(const uint8_t index,
+                   const uint8_t w);
 
 #endif /* SPARKLE_H_ */

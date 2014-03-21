@@ -3,32 +3,33 @@
 #include <stdlib.h>
 #include <util/delay.h>
 
-
 int main() {
   sparkle_init();
 
   for (;;) {
-    uint8_t i = rand() % SPARKLE_DOT_CNT;
+    uint8_t i = rand() % 8 + 16; // SPARKLE_DOT_CNT;
 
-    for (uint8_t h = 0; h < 255; h++) {
-      sparkle_dots[i].r = h;
-      sparkle_dots[i].g = h;
-      sparkle_dots[i].b = h;
+    for (uint8_t h = 0; h < 0x0F; h++) {
+      sparkle_set_w(i,
+                    h);
 
-      _delay_ms(5);
+      for (uint16_t x = 0; x < 0xFF; x++)
+        sparkle_update();
     }
 
-    for (uint8_t h = 255; h > 0; h--) {
-      sparkle_dots[i].r = h;
-      sparkle_dots[i].g = h;
-      sparkle_dots[i].b = h;
+    for (uint8_t h = 0; h < 0x0F; h++) {
+      sparkle_set_w(i,
+                    0x0F - h);
 
-      _delay_ms(5);
+      for (uint16_t x = 0; x < 0xFF; x++)
+        sparkle_update();
     }
 
-    sparkle_dots[i].r = 0;
-    sparkle_dots[i].g = 0;
-    sparkle_dots[i].b = 0;
+    sparkle_set(i,
+                0,
+                0,
+                0);
+    sparkle_update();
     _delay_ms(500);
   }
 }

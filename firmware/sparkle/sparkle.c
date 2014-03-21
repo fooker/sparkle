@@ -5,9 +5,13 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+typedef volatile struct {
+  volatile uint8_t r;
+  volatile uint8_t g;
+  volatile uint8_t b;
+} sparkle_color;
 
-volatile sparkle_color* const sparkle_dots = (sparkle_color[SPARKLE_DOT_CNT]){};
-
+volatile sparkle_color* const sparkle_dots = (sparkle_color[SPARKLE_DOT_CNT] ) { };
 
 void sparkle_init() {
   // Configure the port as output
@@ -25,68 +29,59 @@ void sparkle_init() {
                | (0 << SPARKLE_PIN_CLK)
                | (0 << SPARKLE_PIN_LATCH)
                ;
-
-  // Enable timer
-  TCCR0A = (0 << COM0A1)  // OC0A disconnected
-         | (0 << COM0A0)  // ...
-         | (0 << COM0B1)  // OC0B disconnected
-         | (0 << COM0B0)  // ...
-         | (0 << WGM01)   // Normal counter
-         | (0 << WGM00)   // ...
-         ;
-  TCCR0B = (0 << FOC0A)   // Disable output compare
-         | (0 << FOC0B)   // ...
-         | (0 << WGM02)   // Normal counter
-         | (0 << CS02)    // Prescaler of 1
-         | (0 << CS01)    // resulting ~ 56 hz
-         | (1 << CS00)    // @ 14.7456 mhz w/ 1024 steps
-         ;
-  TIMSK0 = (0 << OCIE0B)  // Disable interrupt on match
-         | (0 << OCIE0A)  // ...
-         | (1 << TOIE0)   // Enable interrupt on overflow
-         ;
-
-  TCNT0 = 0xFF;
-  OCR0A = 0xFF;
-  OCR0B = 0xFF;
-
-  // Enable interrupts globally
-  sei();
 }
 
-
-ISR(TIMER0_OVF_vect) {
+void sparkle_update() {
   static uint16_t x = 0;
 
   // Walk over all dots
   for (uint8_t i = 0; i < SPARKLE_DOT_CNT; i++) {
-    // Build output with all color bits off assuming clock line and latch line
+
+    // Set output for all color bits while assuming clock line and latch line
     // are down before
-    register uint8_t p = 0;
-    if (x >= pwmtable[sparkle_dots[i].r]) p |= (1 << SPARKLE_PIN_R);
-    if (x >= pwmtable[sparkle_dots[i].g]) p |= (1 << SPARKLE_PIN_G);
-    if (x >= pwmtable[sparkle_dots[i].b]) p |= (1 << SPARKLE_PIN_B);
+    SPARKLE_PORT = ((x < sparkle_dots[i].r) << SPARKLE_PIN_R)
+                 | ((x < sparkle_dots[i].g) << SPARKLE_PIN_G)
+                 | ((x < sparkle_dots[i].b) << SPARKLE_PIN_B)
+                 ;
 
-    // Load color bits to shift registers
-    SPARKLE_PORT = p;
-
-    // Wait for color bits to settle
-//    _delay_us(SPARKLE_CLK_DELAY_PRE);
-
-//    // Toggle shift register clock
-//    SPARKLE_PORT |= (1 << SPARKLE_PIN_CLK);
-//    _delay_us(SPARKLE_CLK_DELAY_HIGH);
-//    SPARKLE_PORT &= ~(1 << SPARKLE_PIN_CLK);
-
-    // Wait for shift to settle
-//    _delay_us(SPARKLE_CLK_DELAY_POST);
+    // Toggle shift register clock
+    SPARKLE_PORT ^= (1 << SPARKLE_PIN_CLK);
+    SPARKLE_PORT ^= (1 << SPARKLE_PIN_CLK);
   }
 
-//  // Toggle latch
-//  SPARKLE_PORT |= (1 << SPARKLE_PIN_LATCH);
-//  _delay_us(SPARKLE_LATCH_DELAY_HIGH);
-//  SPARKLE_PORT &= ~(1 << SPARKLE_PIN_LATCH);
+  // Toggle latch
+  SPARKLE_PORT ^= (1 << SPARKLE_PIN_LATCH);
+  SPARKLE_PORT ^= (1 << SPARKLE_PIN_LATCH);
 
-  // Go to next PWM step - looping at 1024
-  x = (x + 1) % 1024;
+  // Go to next PWM step - looping at maximum PWM step size
+  x = (x + 1) % 256;
+}
+
+void sparkle_set(const uint8_t index,
+                 const uint8_t r,
+                 const uint8_t g,
+                 const uint8_t b) {
+  sparkle_dots[index].r = pwmtable[r];
+  sparkle_dots[index].g = pwmtable[g];
+  sparkle_dots[index].b = pwmtable[b];
+}
+
+void sparkle_set_r(const uint8_t index,
+                   const uint8_t r) {
+  sparkle_dots[index].r = pwmtable[r];
+}
+
+void sparkle_set_g(const uint8_t index,
+                   const uint8_t g) {
+  sparkle_dots[index].g = pwmtable[g];
+}
+
+void sparkle_set_b(const uint8_t index,
+                   const uint8_t b) {
+  sparkle_dots[index].b = pwmtable[b];
+}
+
+void sparkle_set_w(const uint8_t index,
+                   const uint8_t w) {
+  sparkle_dots[index].r = sparkle_dots[index].g = sparkle_dots[index].b = pwmtable[w];
 }
