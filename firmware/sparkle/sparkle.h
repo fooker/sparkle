@@ -6,12 +6,13 @@
 
 #include "../config.h"
 
+
 /**
  * Initialize the controller.
  */
 void sparkle_init();
 
-void sparkle_update();
+//void sparkle_update();
 
 void sparkle_set(const uint8_t index,
                  const uint8_t r,

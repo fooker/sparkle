@@ -11,7 +11,7 @@
 /**
  * The maximum value in the PWM table.
  */
-#define SPARKLE_PWMTABLE_MAX 256
+#define SPARKLE_PWMTABLE_MAX 255
 
 static const uint8_t pwmtable[SPARKLE_PWMTABLE_SIZE] = { 0,
                                                          1,

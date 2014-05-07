@@ -7,29 +7,35 @@ int main() {
   sparkle_init();
 
   for (;;) {
-    uint8_t i = rand() % 8 + 16; // SPARKLE_DOT_CNT;
 
     for (uint8_t h = 0; h < 0x0F; h++) {
-      sparkle_set_w(i,
-                    h);
-
-      for (uint16_t x = 0; x < 0xFF; x++)
-        sparkle_update();
+      for (uint8_t i = 0; i < 0x0F; i++) {
+        sparkle_set_r(i,
+                      h);
+      }
+      _delay_ms(5);
     }
 
-    for (uint8_t h = 0; h < 0x0F; h++) {
-      sparkle_set_w(i,
-                    0x0F - h);
-
-      for (uint16_t x = 0; x < 0xFF; x++)
-        sparkle_update();
-    }
-
-    sparkle_set(i,
-                0,
-                0,
-                0);
-    sparkle_update();
-    _delay_ms(500);
+//    uint8_t i = rand() % 24; // SPARKLE_DOT_CNT;
+//
+//    for (uint8_t h = 0; h < 0x0F; h++) {
+//      sparkle_set_w(i,
+//                    h);
+//
+//      _delay_ms(5);
+//    }
+//
+//    for (uint8_t h = 0; h < 0x0F; h++) {
+//      sparkle_set_w(i,
+//                    0x0F - h);
+//
+//      _delay_ms(5);
+//    }
+//
+//    sparkle_set(i,
+//                0,
+//                0,
+//                0);
+//    _delay_ms(500);
   }
 }
