@@ -1,36 +1,70 @@
 #ifndef SPARKLE_CONFIG_H_
 #define SPARKLE_CONFIG_H_
 
-#ifndef SPARKLE_PWM_PORT
-#define SPARKLE_PWM_PORT PORTB
-#endif
+/**
+ * The number of LEDs to control
+ */
+#define SPARKLE_PINS_PORTS 24
 
-#ifndef SPARKLE_PWM_DDR
-#define SPARKLE_PWM_DDR DDRB
-#endif
+/**
+ * The number of banks.
+ * Each LED is attached to the same pin on each bank for each LED channel.
+ */
+#define SPARKLE_PINS_BANKS 3
 
-#ifndef SPARKLE_PWM_PIN_LTC
-#define SPARKLE_PWM_PIN_LTC PB3
-#endif
+/**
+ * The number of pins over all banks.
+ */
+#define SPARKLE_PINS_COUNT (( SPARKLE_PINS_PORTS * SPARKLE_PINS_BANKS ))
 
-#ifndef SPARKLE_PWM_PIN_CLK
-#define SPARKLE_PWM_PIN_CLK PB5
-#endif
+/**
+ * The number of register chips required for all LEDs.
+ */
+#define SPARKLE_PINS_CHIPS (( ceil(SPARKLE_PINS_COUNT / 8) ))
 
-#ifndef SPARKLE_PWM_PIN_OUT
-#define SPARKLE_PWM_PIN_OUT PB4
-#endif
+/**
+ * The SPI port register.
+ */
+#define SPARKLE_SPI_PORT PORTB
 
-#ifndef SPARKLE_CTL_PORT
+/**
+ * The SPI data direction register.
+ */
+#define SPARKLE_SPI_DDR DDRB
+
+/**
+ * The SPI latch pin.
+ */
+#define SPARKLE_SPI_PIN_LTC PB2
+
+/**
+ * The SPI clock pin.
+ */
+#define SPARKLE_SPI_PIN_CLK PB5
+
+/**
+ * The SPI data pin.
+ */
+#define SPARKLE_SPI_PIN_OUT PB3
+
+/**
+ * The control LED port register.
+ */
 #define SPARKLE_CTL_PORT PORTD
-#endif
 
-#ifndef SPARKLE_CTL_DDR
+/**
+ * The control LED data direction register.
+ */
 #define SPARKLE_CTL_DDR DDRD
-#endif
 
-#ifndef SPARKLE_CTL_PIN
+/**
+ * The control LED pin.
+ */
 #define SPARKLE_CTL_PIN PD1
-#endif
+
+/**
+ * The TWI address.
+ */
+#define SPARKLE_TWI_ADDRESS 0x60
 
 #endif /* SPARKLE_CONFIG_H_ */

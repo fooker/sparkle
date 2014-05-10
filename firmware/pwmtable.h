@@ -1,8 +1,6 @@
 #ifndef SPARKLE_PWMTABLE_H_
 #define SPARKLE_PWMTABLE_H_
 
-#include <avr/pgmspace.h>
-
 /**
  * The size of the PWM table.
  */
@@ -13,6 +11,12 @@
  */
 #define SPARKLE_PWMTABLE_MAX 255
 
+/**
+ * The PWM table.
+ *
+ * The table maps the linear value to a brightness value reflecting the eyes
+ * perception of brightness.
+ */
 static const uint8_t pwmtable[SPARKLE_PWMTABLE_SIZE] = { 0,
                                                          1,
                                                          2,
