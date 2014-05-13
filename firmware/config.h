@@ -2,25 +2,25 @@
 #define SPARKLE_CONFIG_H_
 
 /**
- * The number of LEDs to control
- */
-#define SPARKLE_PINS_PORTS 24
-
-/**
  * The number of banks.
- * Each LED is attached to the same pin on each bank for each LED channel.
+ * Each LED is attached to the same pin of the same port on each bank.
  */
 #define SPARKLE_PINS_BANKS 3
 
 /**
- * The number of pins over all banks.
+ * The number of register ports per bank.
  */
-#define SPARKLE_PINS_COUNT (( SPARKLE_PINS_PORTS * SPARKLE_PINS_BANKS ))
+#define SPARKLE_PINS_PORTS 3
 
 /**
- * The number of register chips required for all LEDs.
+ * The number of channels per bank.
  */
-#define SPARKLE_PINS_CHIPS (( ceil(SPARKLE_PINS_COUNT / 8) ))
+#define SPARKLE_PINS_CHANS (( SPARKLE_PINS_PORTS * 8 ))
+
+/**
+ * The number of pins over all banks.
+ */
+#define SPARKLE_PINS_PINS (( SPARKLE_PINS_CHANS * SPARKLE_PINS_BANKS ))
 
 /**
  * The SPI port register.
@@ -43,7 +43,7 @@
 #define SPARKLE_SPI_PIN_CLK PB5
 
 /**
- * The SPI data pin.
+ * The SPI data output pin.
  */
 #define SPARKLE_SPI_PIN_OUT PB3
 
