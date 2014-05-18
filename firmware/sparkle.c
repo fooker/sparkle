@@ -156,13 +156,13 @@ ISR(TWI_vect) {
   case TW_SR_DATA_ACK: // RX data received - ACK
     if (idx == 0xFF) {
       idx = TWDR;
-      bnk = 0x00;
+      bnk = SPARKLE_PINS_BANKS;
 
     } else {
-      sparkle_dots[bnk++][idx] = pwmtable[TWDR];
+      sparkle_dots[--bnk][idx] = pwmtable[TWDR];
 
-      if (bnk == SPARKLE_PINS_BANKS) {
-        bnk = 0;
+      if (bnk == 0) {
+        bnk = SPARKLE_PINS_BANKS;
         idx++;
       }
     }
