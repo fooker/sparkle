@@ -1,7 +1,9 @@
 .cproject
+.pydevproject
 .project
 .settings/
 Debug/
 Release/
 *.b#?
 *.s#?
+*.pyc
